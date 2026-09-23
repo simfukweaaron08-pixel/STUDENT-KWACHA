@@ -1,0 +1,18 @@
+{
+  "name": "student-kwacha",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Student Kwacha - Personal financial management for Zambia",
+  "scripts": {
+    "dev": "docker-compose up",
+    "dev:backend": "cd apps/backend-api && npm run dev",
+    "dev:ml": "cd apps/ml-service && python -m uvicorn app.main:app --reload --port 5001",
+    "dev:admin": "cd apps/admin-dashboard && npm run dev",
+    "seed": "cd apps/backend-api && node scripts/seed.js",
+    "seed:reset": "cd apps/backend-api && node scripts/seed.js --reset",
+    "lint": "echo 'Linting not yet configured'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
