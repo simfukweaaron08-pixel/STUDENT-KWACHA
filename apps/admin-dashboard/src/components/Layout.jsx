@@ -4,6 +4,7 @@ import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 // Import authentication state
 import { useAuthStore } from '../store/authStore';
+// Import icons used throughout the dashboard navigation
 import { LayoutDashboard, Users, Tag, Shield, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
