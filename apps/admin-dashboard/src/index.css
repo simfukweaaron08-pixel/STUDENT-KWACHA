@@ -4,7 +4,7 @@
 @tailwind components;
 /* Tailwind utility styles */
 @tailwind utilities;
-
+/* Global body styles */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
