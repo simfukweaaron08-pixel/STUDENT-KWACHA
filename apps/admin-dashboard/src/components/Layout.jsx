@@ -1,5 +1,6 @@
 // Import React functionality
 import React from 'react';
+// Import routing components used by the dashboard
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { LayoutDashboard, Users, Tag, Shield, Settings, LogOut } from 'lucide-react';
