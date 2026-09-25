@@ -6,6 +6,7 @@
 @tailwind utilities;
 /* Global body styles */
 body {
+  /* Remove the browser's default body margin */
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
