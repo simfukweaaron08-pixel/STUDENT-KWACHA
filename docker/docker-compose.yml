@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sbz-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: student_kwacha
+      POSTGRES_USER: sbz_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-sbz_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sbz_user -d student_kwacha"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend-api:
+    build:
+      context: ../apps/backend-api
+      dockerfile: Dockerfile
+    container_name: sbz-backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      DATABASE_URL: postgresql://sbz_user:${DB_PASSWORD:-sbz_dev_password}@postgres:5432/student_kwacha
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-key-change-in-production}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-dev-refresh-secret-key-change-in-production}
+      JWT_EXPIRY: 15m
+      JWT_REFRESH_EXPIRY: 7d
+      ML_SERVICE_URL: http://ml-service:5001
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-}
+      PAYPAL_SECRET: ${PAYPAL_SECRET:-}
+      PAYPAL_BASE_URL: ${PAYPAL_BASE_URL:-https://api-m.sandbox.paypal.com}
+      PAYPAL_CURRENCY: ${PAYPAL_CURRENCY:-USD}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:3000}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-}
+      PAYPAL_SECRET: ${PAYPAL_SECRET:-}
+      PAYPAL_BASE_URL: ${PAYPAL_BASE_URL:-https://api-m.sandbox.paypal.com}
+      FUNDING_CHECK_INTERVAL_MINUTES: ${FUNDING_CHECK_INTERVAL_MINUTES:-60}
+    volumes:
+      - ../apps/backend-api:/app
+      - /app/node_modules
+
+  ml-service:
+    build:
+      context: ../apps/ml-service
+      dockerfile: Dockerfile
+    container_name: sbz-ml
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      DATABASE_URL: postgresql://sbz_user:${DB_PASSWORD:-sbz_dev_password}@postgres:5432/student_kwacha
+      MODEL_PATH: ./models
+      LOG_LEVEL: INFO
+    volumes:
+      - ../apps/ml-service:/app
+      - ml_models:/app/models
+
+  admin-dashboard:
+    build:
+      context: ../apps/admin-dashboard
+      dockerfile: Dockerfile
+    container_name: sbz-admin
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:3000
+    volumes:
+      - ../apps/admin-dashboard:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
+  ml_models:

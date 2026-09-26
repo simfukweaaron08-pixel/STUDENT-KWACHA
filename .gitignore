@@ -1,0 +1,100 @@
+# =====================
+# Root
+# =====================
+.env
+.env.*
+!.env.example
+*.log
+
+# =====================
+# Node.js (backend-api, admin-dashboard)
+# =====================
+node_modules/
+dist/
+build/
+*.tgz
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================
+# Flutter (apps/flutter-app)
+# =====================
+# Dart / Flutter build artifacts
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
+build/
+*.iml
+
+# Flutter platform build dirs
+android/.gradle/
+android/app/build/
+android/local.properties
+android/key.properties
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/.last_build_id
+ios/Flutter/flutter_export_environment.sh
+ios/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+macos/Pods/
+macos/Flutter/ephemeral/
+linux/flutter/ephemeral/
+windows/flutter/ephemeral/
+
+# Flutter generated
+.flutter-plugins-dependencies
+.metadata
+
+# =====================
+# IDE / Editor
+# =====================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# =====================
+# Python (apps/ml-service)
+# =====================
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+*.whl
+
+# ML model files (large binary blobs)
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.tflite
+*.onnx
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# =====================
+# Docker
+# =====================
+docker-compose.override.yml
+
+# =====================
+# OS
+# =====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
