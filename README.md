@@ -241,3 +241,4 @@ flutter run
 ## License
 
 This project is for academic purposes.
+Student Kwacha is a budgeting application designed to help students manage their finances.
