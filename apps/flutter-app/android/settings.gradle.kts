@@ -1,5 +1,5 @@
 pluginManagement {
-    val flutterSdkPath =
+    val flutterSdkPat =
         run {
             val properties = java.util.Properties()
             file("local.properties").inputStream().use { properties.load(it) }
