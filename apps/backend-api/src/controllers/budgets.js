@@ -29,7 +29,11 @@ const ALLOCATIONS_INCLUDE = [{
   include: [{ model: Category, as: 'category', attributes: ['id', 'name', 'icon', 'color'] }],
 }];
 
-/** Serialize a budget with allocations + per-category spend. */
+/*
+ * Prepare a budget response for the frontend.
+ * Calculate the amount spent, the remaining balance,
+ * the percentage used, and the status of each allocation.
+ */
 async function serializeBudget(budget) {
   const json = budget.toJSON();
   const { spent, remaining, percentage } = await computeBudgetSpending(budget);

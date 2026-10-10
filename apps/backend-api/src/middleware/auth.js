@@ -14,9 +14,11 @@ const authenticate = async (req, res, next) => {
       });
     }
 
+    // Extract the bearer token and verify its signature and expiry before trusting it.
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, JWT_SECRET);
 
+    // Retrieve the account associated with the token, excluding the password hash from the result.
     const user = await User.findByPk(decoded.userId, {
       attributes: { exclude: ['password_hash'] },
     });
@@ -35,6 +37,7 @@ const authenticate = async (req, res, next) => {
       });
     }
 
+    // Make the authenticated user's details available to the next middleware or controller.
     req.user = user;
     req.userId = user.id;
     next();

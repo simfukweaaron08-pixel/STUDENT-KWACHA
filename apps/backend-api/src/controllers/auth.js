@@ -22,6 +22,11 @@ const parseExpiry = (expiry) => {
   }
 };
 
+/*
+ * Generate JWT tokens for authentication.
+ * The access token is used to access protected API endpoints.
+ * The refresh token allows the user to renew their session.
+ */
 const generateTokens = (userId) => {
   const accessToken = jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
   const refreshToken = jwt.sign({ userId, jti: uuidv4() }, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRY });
@@ -33,7 +38,7 @@ const register = async (req, res, next) => {
   try {
     const { email, full_name, phone_number, password, institution, student_id } = req.validated.body;
 
-    // Check existing user
+   // Check whether the email or phone number is already registered to prevent duplicate accounts.
     const existing = await User.findOne({ where: { [Op.or]: [{ email }, ...(phone_number ? [{ phone_number }] : [])] } });
     if (existing) {
       return res.status(409).json({
@@ -42,7 +47,9 @@ const register = async (req, res, next) => {
       });
     }
 
+    // Hash the password before saving it so the original password is not stored in the database.
     const password_hash = await bcrypt.hash(password, 12);
+    // Save the validated registration details as a new user record in the database.
     const user = await User.create({
       email,
       full_name,

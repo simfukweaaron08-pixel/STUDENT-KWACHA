@@ -31,7 +31,7 @@ RefreshToken.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 User.hasMany(Category, { foreignKey: 'created_by', as: 'customCategories' });
 Category.belongsTo(User, { foreignKey: 'created_by', as: 'creator' });
 
-// User ↔ Transaction
+// A user can have many transactions, and each transaction belongs to one user.
 User.hasMany(Transaction, { foreignKey: 'user_id', as: 'transactions' });
 Transaction.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
@@ -39,7 +39,7 @@ Transaction.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 Category.hasMany(Transaction, { foreignKey: 'category_id', as: 'transactions' });
 Transaction.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
 
-// User ↔ Budget
+// A user can create multiple budgets, while each budget belongs to its owner.
 User.hasMany(Budget, { foreignKey: 'user_id', as: 'budgets' });
 Budget.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 

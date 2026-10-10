@@ -2,7 +2,7 @@ const { Transaction, Category, User } = require('../models');
 const { paginate, buildPaginationResponse, Op } = require('../utils/pagination');
 const { checkSpendingControls, evaluateBudgetAlerts } = require('../services/budgetAlerts');
 
-// GET /api/v1/transactions
+// Retrieve the authenticated user's transactions with optional filters and pagination.
 const listTransactions = async (req, res, next) => {
   try {
     const {
@@ -33,6 +33,7 @@ const listTransactions = async (req, res, next) => {
       ];
     }
 
+    // Retrieve the matching transaction records and total count for paginated results.
     const { count, rows } = await Transaction.findAndCountAll({
       ...paginate({ where, order: [['transaction_date', 'DESC']] }, page, limit),
       include: [{ model: Category, as: 'category', attributes: ['id', 'name', 'icon', 'color'] }],
@@ -59,6 +60,7 @@ const getTransactionSummary = async (req, res, next) => {
       if (end_date) where.transaction_date[Op.lte] = new Date(end_date);
     }
 
+    // Fetch the user's transactions for the selected period to calculate income and expenses.
     const transactions = await Transaction.findAll({ where });
 
     let totalIncome = 0;

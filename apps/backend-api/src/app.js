@@ -22,6 +22,7 @@ const adminRoutes = require('./routes/admin');
 const walletRoutes = require('./routes/wallet');
 const paymentMethodRoutes = require('./routes/paymentMethods');
 
+// Create the Express application that handles incoming API requests.
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -53,6 +54,7 @@ app.get('/api/v1/health', (req, res) => {
 });
 
 // API routes
+// Connect each API endpoint group to its corresponding route module.
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
@@ -77,7 +79,7 @@ app.use((req, res) => {
 // Global error handler
 app.use(errorHandler);
 
-// Database sync and server start
+// Verify the database connection and synchronize models before starting the API server.
 async function start() {
   try {
     await sequelize.authenticate();

@@ -1,6 +1,12 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+/*
+ * User model:
+ * Defines the structure of the users table in PostgreSQL.
+ * It includes account details, password hash, currency,
+ * account status, and student information.
+ */
 const User = sequelize.define('User', {
   id: {
     type: DataTypes.UUID,

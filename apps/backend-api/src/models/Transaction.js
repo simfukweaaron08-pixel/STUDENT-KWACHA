@@ -1,6 +1,12 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+/*
+ * Transaction model:
+ * Defines how income, expenses, and transfers are recorded.
+ * Each transaction stores information such as the amount,
+ * transaction type, category, date, and reference number.
+ */
 const Transaction = sequelize.define('Transaction', {
   id: {
     type: DataTypes.UUID,
@@ -55,6 +61,7 @@ const Transaction = sequelize.define('Transaction', {
   },
 }, {
   tableName: 'transactions',
+  // Indexes help the database find common user transaction queries more efficiently.
   indexes: [
     {
       fields: ['user_id', 'transaction_date', 'category_id'],

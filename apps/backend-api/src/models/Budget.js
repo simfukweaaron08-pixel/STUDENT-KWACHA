@@ -1,6 +1,12 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
+/*
+ * Budget model:
+ * Defines the database fields used to store a user's budget,
+ * including its amount, period, dates, spending limit,
+ * funding details, and current funding status.
+ */
 const Budget = sequelize.define('Budget', {
   id: {
     type: DataTypes.UUID,
