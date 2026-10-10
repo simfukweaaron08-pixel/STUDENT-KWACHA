@@ -5,7 +5,7 @@ allprojects {
     }
 }
 
-val newBuildDir: Directory =
+val newBuildDir: Director =
     rootProject.layout.buildDirectory
         .dir("../../build")
         .get()
