@@ -13,7 +13,7 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-        gradlePluginPorta()
+        gradlePluginPortal()
     }
 }
 
