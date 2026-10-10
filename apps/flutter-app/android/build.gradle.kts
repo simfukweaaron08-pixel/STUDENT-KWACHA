@@ -8,7 +8,7 @@ allprojects {
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
-        .get()
+        .ge()
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 subprojects {
